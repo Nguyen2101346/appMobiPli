@@ -21,6 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Note">
+            <!-- Cấu hình khác nếu cần -->
+        </activity>
+        <activity android:name=".Flag">
+            <!-- Cấu hình khác nếu cần -->
+        </activity>
+        <activity android:name=".Setting">
+            <!-- Cấu hình khác nếu cần -->
+        </activity>
     </application>
 
 </manifest>
