@@ -1,6 +1,5 @@
 package com.example.utilitycalendar;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle("Home");
             }
             if(item.getItemId() == R.id.nav_note) {
-                selectedFragment = new NoteFragment();
+                selectedFragment = new CategoryNoteFragment();
                 getSupportActionBar().setTitle("Note");
             }
             if(item.getItemId() == R.id.nav_flag) {

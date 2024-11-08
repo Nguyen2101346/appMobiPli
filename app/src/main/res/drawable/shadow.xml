@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bóng đổ -->
+    <item android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp">
+        <shape>
+            <solid android:color="#000000"/> <!-- Màu đen với độ mờ 50% -->
+            <corners android:radius="20dp"/><!-- Bo góc -->
+            <padding
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+
+    <!-- Nội dung chính của LinearLayout -->
+    <item>
+        <shape>
+            <solid android:color="#FFFFFF"/>  <!-- Màu nền chính -->
+            <corners android:radius="20dp"/>   <!-- Bo góc -->
+        </shape>
+    </item>
+</layer-list>

@@ -9,6 +9,9 @@
         android:icon="@drawable/book_4_24px"
         android:title="Note" />
     <item
+        android:id="@+id/empty"
+        android:title="" />
+    <item
         android:id="@+id/nav_flag"
         android:icon="@drawable/flag_24px"
         android:title="Flag" />
