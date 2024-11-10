@@ -3,23 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:background="@drawable/shadow"
-
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="200dp"
     >
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="0dp"
-        >
+        android:padding="0dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -28,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Hoc tap"
+                android:layout_marginBottom="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -36,20 +38,26 @@
                 android:id="@+id/note_category_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="5 ghi chu"
+                android:background="@drawable/radius_for_note_count"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
 
-        <TextView
+        <ImageView
             android:id="@+id/note_category_image"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end|center_vertical"
-            android:text="Hoc tap"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center_vertical|end"
+            android:src="@drawable/book_4_24px"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="0.2"
+            />
+
 
 
     </LinearLayout>

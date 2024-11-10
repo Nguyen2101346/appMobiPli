@@ -36,7 +36,7 @@ public class NoteFragment extends Fragment {
         // Thêm dữ liệu mẫu
         noteList.add(new Note("1","hoc 1","Học tập", "5/5/2022"));
         noteList.add(new Note("2","hoc 2","Học tập", "5/5/2022"));
-        noteList.add(new Note("3","hoc 3","Học tập", "5/5/2022"));
+        noteList.add(new Note("3","hoc 3","sddssdssdds \n ggggfffffffffffffffff\n ffffffffffffffffffffffffff\nfffffffffff\nffff    \nsdsdsddsdsdsdsds \nn sdddsdsdsdsd \nsdsddssd\nddsdssd\n heets", "5/5/2022"));
         noteList.add(new Note("4","hoc 4","Học tập", "5/5/2022"));
         noteList.add(new Note("5","hoc 5","Học tập", "5/5/2022"));
         noteList.add(new Note("6","hoc 6","Học tập", "5/5/2022"));

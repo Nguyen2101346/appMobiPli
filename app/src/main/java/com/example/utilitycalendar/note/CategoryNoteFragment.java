@@ -1,4 +1,4 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.note;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.utilitycalendar.note.NoteCategory;
-import com.example.utilitycalendar.note.NoteCategoryAdapter;
-import com.example.utilitycalendar.note.NoteFragment;
+import com.example.utilitycalendar.R;
 
 import java.util.ArrayList;
 import java.util.List;

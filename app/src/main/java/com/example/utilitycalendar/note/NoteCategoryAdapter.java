@@ -40,7 +40,13 @@ public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapte
 
         // Cập nhật view con với dữ liệu từ NoteCategory
         holder.categoryName.setText(category.getName());
-        holder.noteCount.setText(String.valueOf(category.getNoteCount()));
+
+
+        StringBuilder noteCount = new StringBuilder();
+        noteCount.append(category.getNoteCount()).append(" ghi chú");
+
+
+        holder.noteCount.setText(String.valueOf(noteCount));
 
         // Xử lý sự kiện khi nhấn vào item
         holder.itemView.setOnClickListener(v -> listener.onCategoryClick(category));
