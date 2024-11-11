@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.noteContent.setText(note.getContent());
         holder.noteDate.setText(note.getDate());
 
+
+        // Kiểm tra giá trị 'pin' để ẩn hoặc hiển thị note_image
+        if (note.isPin()) { // Giả sử có phương thức isPin() để kiểm tra giá trị pin
+            holder.noteImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.noteImage.setVisibility(View.GONE);
+        }
+
+
+
         // Xử lý sự kiện khi nhấn vào item
         holder.itemView.setOnClickListener(v -> listener.onNoteClick(note));
     }
@@ -56,6 +67,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     // Định nghĩa lớp ViewHolder
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         public TextView noteTitle, noteContent, noteDate;
+        public ImageView noteImage;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +75,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             noteTitle = itemView.findViewById(R.id.note_title);
             noteContent = itemView.findViewById(R.id.note_content);
             noteDate = itemView.findViewById(R.id.note_date);
+            noteImage = itemView.findViewById(R.id.note_image);
         }
     }
 

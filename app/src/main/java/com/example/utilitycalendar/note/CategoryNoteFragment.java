@@ -28,10 +28,10 @@ public class CategoryNoteFragment extends Fragment {
         // Khởi tạo danh sách danh mục
         categoryList = new ArrayList<>();
         // Thêm dữ liệu mẫu
-        categoryList.add(new NoteCategory("hoctap","Học tập", 5));
-        categoryList.add(new NoteCategory("lamviec","Làm việc", 5));
-        categoryList.add(new NoteCategory("giaitri","Giải trí", 5));
-        categoryList.add(new NoteCategory("thuongnagy","Thường ngày", 5));
+        categoryList.add(new NoteCategory("hoctap","Học tập", 5, "home_24px"));
+        categoryList.add(new NoteCategory("lamviec","Làm việc", 5, "home_24px"));
+        categoryList.add(new NoteCategory("giaitri","Giải trí", 5, "home_24px"));
+        categoryList.add(new NoteCategory("thuongnagy","Thường ngày", 5, "home_24px"));
 
         adapter = new NoteCategoryAdapter(getContext(), categoryList, category -> {
             // Xử lý khi nhấn vào một danh mục

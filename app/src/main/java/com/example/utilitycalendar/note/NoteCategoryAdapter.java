@@ -1,9 +1,11 @@
 package com.example.utilitycalendar.note;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +50,11 @@ public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapte
 
         holder.noteCount.setText(String.valueOf(noteCount));
 
+
+        // Đặt icon cho ImageView
+        @SuppressLint("DiscouragedApi") int iconResId = context.getResources().getIdentifier(category.getIcon(), "drawable", context.getPackageName());
+        holder.categoryImage.setImageResource(iconResId);
+
         // Xử lý sự kiện khi nhấn vào item
         holder.itemView.setOnClickListener(v -> listener.onCategoryClick(category));
     }
@@ -61,12 +68,14 @@ public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapte
     // Định nghĩa lớp ViewHolder
     public static class NoteCategoryViewHolder extends RecyclerView.ViewHolder {
         public TextView categoryName, noteCount;
+        public ImageView categoryImage;
 
         public NoteCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             // Khởi tạo các view con từ layout item_note_category
             categoryName = itemView.findViewById(R.id.note_category_name);
             noteCount = itemView.findViewById(R.id.note_category_count);
+            categoryImage = itemView.findViewById(R.id.note_category_image);
         }
     }
 
