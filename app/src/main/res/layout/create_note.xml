@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:scrollbars="vertical"
+    android:scrollbarStyle="insideOverlay">
+
+    <!-- Main Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottomsheetlayout"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <!-- Notification Icon and Label -->
+            <!-- Back button -->
+            <LinearLayout
+                android:id="@+id/layoutBackBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="70dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/ic_arrow_back_50"
+                    android:background="@drawable/btnbg_green_corner_right"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    app:tint="@color/white"/>
+            </LinearLayout>
+
+            <!-- Text -->
+            <LinearLayout
+                android:id="@+id/layoutTextCreNoti"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginVertical="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Tạo một ghi chú mới"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </FrameLayout>
+        <!--  Body  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="25dp"
+                android:background="@drawable/bg_edittext_20">
+
+                <LinearLayout
+                    android:id="@+id/layoutTextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|start"
+                        android:hint="Tiêu Đề"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTextNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="50dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Thêm ghi chú"
+                        android:gravity="top|start"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="10dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:background="@android:color/transparent"
+                        android:scrollbars="vertical"
+                        android:scrollbarStyle="insideOverlay"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/AddCate"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end|top"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/lightTeal"
+                    android:background="@drawable/btnbg_close"
+                    android:padding="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/baseline_add_24"
+                    app:tint="@color/white" />
+            </FrameLayout>
+            <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/LayoutAddCate"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="-250dp"
+                android:layout_marginHorizontal="25dp"
+                android:background="@drawable/bg_edittext_20">
+                <GridView
+                    android:id="@+id/gridLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2"
+                    android:columnWidth="60dp"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    android:padding="20dp"/>
+                <ImageView
+                    android:id="@+id/cancelButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end|top"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/lightTeal"
+                    android:background="@drawable/btnbg_close"
+                    android:padding="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_clear_50"
+                    app:tint="@color/white" />
+            </FrameLayout>
+        </LinearLayout>
+        <!--  Item footer  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_edittext_20"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideOverlay"
+            android:fillViewport="true">
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="270dp"
+                android:scrollbars="vertical"
+                android:fillViewport="true"
+                android:scrollbarSize="6dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/layoutText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginHorizontal="15dp"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:src="@drawable/ic_calendar_64" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="5dp"
+                                    android:text="Thời gian"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <Switch
+                                    android:id="@+id/timeSwitch"
+                                    android:layout_width="70dp"
+                                    android:layout_height="50dp"
+                                    android:thumbTint="@color/gray"
+                                    android:trackTint="@color/gray" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/timeOptionsLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone"
+                                android:layout_marginTop="10dp">
+
+                                <!-- Date Option -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginEnd="15dp"
+                                    android:orientation="horizontal">
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:src="@drawable/ic_calendar_50"
+                                        />
+                                    <EditText
+                                        android:id="@+id/editTextDate"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:paddingHorizontal="20dp"
+                                        android:layout_marginStart="5dp"
+                                        android:background="@drawable/bg_editext"
+                                        android:text="Chọn ngày"
+                                        android:onClick="openDatePicker"/>
+                                </LinearLayout>
+
+                                <!-- Time Option -->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginEnd="15dp"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:src="@drawable/ic_clock_50"
+                                        />
+                                    <EditText
+                                        android:id="@+id/editTextTime"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginStart="5dp"
+                                        android:layout_weight="1"
+                                        android:paddingHorizontal="20dp"
+                                        android:onClick="openTimePicker"
+                                        android:background="@drawable/bg_editext"
+                                        android:text="Chọn giờ" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginHorizontal="15dp">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/ic_pin_50" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="5dp"
+                                android:text="Ghim"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <Switch
+                                android:layout_width="70dp"
+                                android:layout_height="50dp"
+                                android:thumbTint="@color/gray"
+                                android:trackTint="@color/gray"
+                                android:backgroundTint="@color/green"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp">
+
+                        <!--      Color change      -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"
+                            android:layout_marginHorizontal="15dp"
+                            />
+                        <LinearLayout
+                            android:id="@+id/layoutColorChange"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginHorizontal="15dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/checkColor"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/ic_color_lens_50"
+                                android:layout_marginEnd="10dp"
+                                />
+                            <RadioGroup
+                                android:id="@+id/radioGroup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"
+                            android:layout_marginHorizontal="15dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="25dp"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/btnbg_green"
+                            android:src="@drawable/ic_check_45"
+                            app:tint="@color/green" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

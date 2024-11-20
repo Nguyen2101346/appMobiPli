@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/black"
+    >
+    <!-- Main Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottomsheetlayout"
+        android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+                <!-- Notification Icon and Label -->
+                <!-- Back button -->
+                <LinearLayout
+                    android:id="@+id/layoutBackBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/backButton"
+                        android:layout_width="70dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/ic_arrow_back_50"
+                        android:background="@drawable/btnbg_purple_corner_right"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        app:tint="@color/white"
+                        />
+                </LinearLayout>
+
+                <!-- Text -->
+                <LinearLayout
+                    android:id="@+id/layoutTextCreNoti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginVertical="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Tạo một thông báo mới "
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!--    Notification icons    -->
+                <LinearLayout
+                    android:id="@+id/layoutNotiBell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/notiIcon"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/ic_noti_45"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        app:tint="@color/black"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--  Body  -->
+            <!--      Item head      -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <!--      Name Notification      -->
+                <LinearLayout
+                    android:id="@+id/layoutTxtNameNoti"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/editTextName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_editext"
+                        android:hint=" Tên của thông báo "
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+
+                <!--      Date Notification      -->
+                <LinearLayout
+                    android:id="@+id/layoutTxtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_editext"
+                        android:hint=" Chọn ngày "
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_DatePicker"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:text="Chọn ngày"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/vio"
+                        android:layout_marginStart="10dp"
+                        android:onClick="openDatePicker"/>
+                </LinearLayout>
+
+                <!--      Time Notification      -->
+                <LinearLayout
+                    android:id="@+id/layoutTxtTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_editext"
+                        android:hint=" Chọn giờ"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:textColor="#000000"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_TimePicker"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:text="Chọn giờ"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/vio"
+                        android:layout_marginStart="10dp"
+                        android:onClick="openTimePicker"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        <!--  Body  -->
+        <!--      Item body      -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <!--      Color change      -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/black"
+                android:layout_marginHorizontal="25dp"/>
+            <LinearLayout
+                android:id="@+id/layoutColorChange"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="25dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/checkColor"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_color_lens_50"
+                    android:layout_marginEnd="20dp"
+                    />
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </RadioGroup>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/black"
+                android:layout_marginHorizontal="25dp"/>
+        </LinearLayout>
+        <!--      Item footer      -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/layoutTextDetail"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginHorizontal="25dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Chi tiết"
+                    android:gravity="top|start"
+                    android:padding="10dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_editext"
+                    android:maxLines="10"
+                    android:maxLength="250"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="insideOverlay"
+                    android:overScrollMode="never"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="25dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/btnbg_purple"
+                    android:src="@drawable/ic_check_45"
+                    app:tint="@color/purple" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+    <!-- Close Button in the Top Right Corner -->
+</FrameLayout>

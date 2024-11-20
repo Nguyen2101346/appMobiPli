@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">UtilityCalendar</string>
+    <string name="create_Noti">Thông báo</string>
+    <string name="create_Note">Ghi chú</string>
+</resources>
