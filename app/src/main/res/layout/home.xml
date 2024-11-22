@@ -1,19 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"> <!-- Thay đổi thành "vertical" -->
+    android:layout_height="match_parent">
 
-    <!-- Nội dung chính của ứng dụng -->
-    <TextView
-        android:id="@+id/text_view"
+    <!-- Thêm ScrollView chứa giao diện -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Container chính cho tất cả các phần tử giao diện người dùng -->
+        <LinearLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <!-- DatePicker để chọn ngày -->
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:paddingTop="10dp"/>
+
+            <!-- EditText để nhập tiêu đề, ban đầu ẩn -->
+            <EditText
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tiêu đề nhắc nhở"
+                android:inputType="text"
+                android:visibility="gone" />
+
+            <!-- Nút để chọn thời gian, ban đầu ẩn -->
+            <Button
+                android:id="@+id/btnPickTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chọn Thời gian"
+                android:visibility="gone" />
+
+            <!-- Các nút OK và Cancel -->
+            <LinearLayout
+                android:id="@+id/btnContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnOK"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OK" />
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hủy" />
+            </LinearLayout>
+
+            <!-- LinearLayout để hiển thị danh sách các nhắc nhở đã lưu -->
+            <LinearLayout
+                android:id="@+id/llReminders"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Thêm RelativeLayout chứa thông báo -->
+    <RelativeLayout
+        android:id="@+id/emptyStateLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="home"
-        android:textSize="18sp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_background">
 
+        <ImageView
+            android:id="@+id/emptyStateIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_empty_state" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/emptyStateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emptyStateIcon"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            android:text="Chưa có thông báo nào cho ngày hôm nay!\nHãy tạo một thông báo nào!"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Di chuyển nút button phía dưới màn hình góc phải -->
+    <Button
+        android:id="@+id/btnToggleDatePicker"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:padding="12.5dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button_calendar"
+        android:drawableLeft="@drawable/ic_calendar"
+        android:text="" />
+
+</RelativeLayout>

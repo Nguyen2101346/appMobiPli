@@ -14,7 +14,7 @@
         android:elevation="4dp"
         android:title=""
         android:titleTextColor="@android:color/white"
-        android:padding="16dp"/>
+        android:padding="1dp"/>
 
     <!-- Nội dung chính của ứng dụng -->
     <FrameLayout
