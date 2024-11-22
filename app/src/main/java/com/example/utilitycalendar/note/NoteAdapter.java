@@ -10,17 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilitycalendar.Database.Notes;
 import com.example.utilitycalendar.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
     private Context context;
-    private List<Note> notes;
+    private List<Notes> notes;
     private OnNoteClickListener listener;
 
     // Constructor
-    public NoteAdapter(Context context, List<Note> notes, OnNoteClickListener listener) {
+    public NoteAdapter(Context context, List<Notes> notes, OnNoteClickListener listener) {
         this.context = context;
         this.notes = notes;
         this.listener = listener;
@@ -37,16 +40,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         // Lấy đối tượng NoteCategory tại vị trí 'position'
-        Note note = notes.get(position);
+        Notes note = notes.get(position);
 
         // Cập nhật view con với dữ liệu từ NoteCategory
-        holder.noteTitle.setText(note.getTitle());
+        holder.noteTitle.setText(note.getTittle());
         holder.noteContent.setText(note.getContent());
-        holder.noteDate.setText(note.getDate());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        holder.noteDate.setText(dateFormat.format(note.getNoteDate()));
 
 
         // Kiểm tra giá trị 'pin' để ẩn hoặc hiển thị note_image
-        if (note.isPin()) { // Giả sử có phương thức isPin() để kiểm tra giá trị pin
+        if (note.getPinned() == 1) { // Giả sử có phương thức isPin() để kiểm tra giá trị pin
             holder.noteImage.setVisibility(View.VISIBLE);
         } else {
             holder.noteImage.setVisibility(View.GONE);
@@ -81,6 +86,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     // Định nghĩa giao diện cho click listener (nếu cần)
     public interface OnNoteClickListener {
-        void onNoteClick(Note note);
+        void onNoteClick(Notes note);
     }
 }

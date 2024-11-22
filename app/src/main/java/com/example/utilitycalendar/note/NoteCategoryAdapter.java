@@ -11,17 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilitycalendar.Database.NoteCategories;
 import com.example.utilitycalendar.R;
 
 import java.util.List;
 
 public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapter.NoteCategoryViewHolder> {
     private Context context;
-    private List<NoteCategory> noteCategories;
+    private List<NoteCategories> noteCategories;
     private OnNoteCategoryClickListener listener;
 
     // Constructor
-    public NoteCategoryAdapter(Context context, List<NoteCategory> noteCategories, OnNoteCategoryClickListener listener) {
+    public NoteCategoryAdapter(Context context, List<NoteCategories> noteCategories, OnNoteCategoryClickListener listener) {
         this.context = context;
         this.noteCategories = noteCategories;
         this.listener = listener;
@@ -38,14 +39,14 @@ public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull NoteCategoryViewHolder holder, int position) {
         // Lấy đối tượng NoteCategory tại vị trí 'position'
-        NoteCategory category = noteCategories.get(position);
+        NoteCategories category = noteCategories.get(position);
 
         // Cập nhật view con với dữ liệu từ NoteCategory
-        holder.categoryName.setText(category.getName());
+        holder.categoryName.setText(category.getCate_name());
 
 
         StringBuilder noteCount = new StringBuilder();
-        noteCount.append(category.getNoteCount()).append(" ghi chú");
+        noteCount.append(category.getNote_count()).append(" ghi chú");
 
 
         holder.noteCount.setText(String.valueOf(noteCount));
@@ -81,6 +82,6 @@ public class NoteCategoryAdapter extends RecyclerView.Adapter<NoteCategoryAdapte
 
     // Định nghĩa giao diện cho click listener (nếu cần)
     public interface OnNoteCategoryClickListener {
-        void onCategoryClick(NoteCategory category);
+        void onCategoryClick(NoteCategories category);
     }
 }

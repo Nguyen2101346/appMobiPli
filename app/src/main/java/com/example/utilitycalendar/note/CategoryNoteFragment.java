@@ -1,6 +1,7 @@
 package com.example.utilitycalendar.note;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +10,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilitycalendar.Database.Database;
+import com.example.utilitycalendar.Database.NoteCategories;
+import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class CategoryNoteFragment extends Fragment {
     private RecyclerView recyclerView;
     private NoteCategoryAdapter adapter;
-    private List<NoteCategory> categoryList;
+
+    Database database = MainActivity.appDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,35 +33,43 @@ public class CategoryNoteFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Khởi tạo danh sách danh mục
-        categoryList = new ArrayList<>();
-        // Thêm dữ liệu mẫu
-        categoryList.add(new NoteCategory("hoctap","Học tập", 5, "home_24px"));
-        categoryList.add(new NoteCategory("lamviec","Làm việc", 5, "home_24px"));
-        categoryList.add(new NoteCategory("giaitri","Giải trí", 5, "home_24px"));
-        categoryList.add(new NoteCategory("thuongnagy","Thường ngày", 5, "home_24px"));
 
-        adapter = new NoteCategoryAdapter(getContext(), categoryList, category -> {
-            // Xử lý khi nhấn vào một danh mục
-            NoteFragment fragment = new NoteFragment();
+        // Executor để chạy database trên background thread
+        Executor executor = Executors.newSingleThreadExecutor();
 
-            // Truyền dữ liệu qua Bundle
-            Bundle bundle = new Bundle();
-            bundle.putString("categoryId", category.getId()); // Truyền id của category
-            fragment.setArguments(bundle);
+        executor.execute(() -> {
+            // Thêm dữ liệu mẫu vào database (nếu cần)
 
 
-            // Chuyển fragment mới
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            // Lấy tất cả dữ liệu từ database
+            List<NoteCategories> categories = database.noteCategoriesDao().getAllNoteCategories();
 
+            // Cập nhật UI trên main thread
+            getActivity().runOnUiThread(() -> {
+                if (categories.isEmpty()) {
+                    Log.d("CategoryNoteFragment", "categoryList is empty");
+                } else {
+                    adapter = new NoteCategoryAdapter(getContext(), categories, category -> {
+                        // Xử lý khi nhấn vào một danh mục
+                        NoteFragment fragment = new NoteFragment();
 
+                        // Truyền dữ liệu qua Bundle
+                        Bundle bundle = new Bundle();
+                        bundle.putString("categoryId", category.getNote_id()); // Truyền id của category
+                        fragment.setArguments(bundle);
 
+                        // Chuyển fragment mới
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frame_layout, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    });
+
+                    recyclerView.setAdapter(adapter);
+                }
+            });
         });
 
-        recyclerView.setAdapter(adapter);
         return view;
     }
-
 }
