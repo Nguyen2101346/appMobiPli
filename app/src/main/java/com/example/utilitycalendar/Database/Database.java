@@ -10,7 +10,7 @@ import android.content.Context;
 
 import java.util.List;
 
-@androidx.room.Database(entities = {Notification.class, Notes.class, NoteCategories.class}, version = 3, exportSchema = false)
+@androidx.room.Database(entities = {Notification.class, Notes.class, NoteCategories.class}, version = 4, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 

@@ -1,48 +1,61 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_background1"
-    android:padding="10dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:elevation="4dp">
+    android:layout_margin="8dp"
 
-    <!-- Icon xóa nhắc nhở -->
-    <ImageView
-        android:id="@+id/btnDeleteReminder"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_delete"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="Xóa"
-        android:padding="4dp" />
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="200dp"
+    >
 
-    <!-- Tiêu đề nhắc nhở -->
-    <TextView
-        android:id="@+id/tvReminderTitle"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tiêu đề nhắc nhở"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@id/btnDeleteReminder" />
-
-    <!-- Ngày giờ nhắc nhở -->
-    <TextView
-        android:id="@+id/tvReminderTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="20-11-2024 10:30"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_below="@id/tvReminderTitle"
+        android:background="@drawable/rounded_background1"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@id/btnDeleteReminder" />
-</RelativeLayout>
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:elevation="4dp">
+
+        <!-- Icon xóa nhắc nhở -->
+        <ImageView
+            android:id="@+id/btnDeleteReminder"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_delete"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="Xóa"
+            android:padding="4dp" />
+
+        <!-- Tiêu đề nhắc nhở -->
+        <TextView
+            android:id="@+id/tvReminderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/btnDeleteReminder"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Ngày giờ nhắc nhở -->
+        <TextView
+            android:id="@+id/tvReminderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_below="@id/tvReminderTitle"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/btnDeleteReminder" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

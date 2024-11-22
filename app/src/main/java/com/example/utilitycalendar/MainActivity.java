@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.utilitycalendar.Database.Database;
+import com.example.utilitycalendar.home.DayHomeFragment;
 import com.example.utilitycalendar.note.CategoryNoteFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment selectedFragment = null;
 
             if(item.getItemId() == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
+                selectedFragment = new DayHomeFragment();
                 getSupportActionBar().setTitle("Home");
             }
             if(item.getItemId() == R.id.nav_note) {

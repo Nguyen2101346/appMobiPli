@@ -28,7 +28,6 @@ public class NoteFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
-//    private List<Notes> noteList;
 
     Database database = MainActivity.appDatabase;
 
