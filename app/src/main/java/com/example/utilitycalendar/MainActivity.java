@@ -8,8 +8,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         //thong bao
 
-        createNotificationChannel();
+
+
+//        createNotificationChannel();
 
         // Hiển thị danh sách thông báo
         Executor executorMain = Executors.newSingleThreadExecutor();
@@ -106,19 +111,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Phương thức tạo NotificationChannel cho Android O trở lên
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Default Channel";
-            String description = "This is the default notification channel.";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+//    private void createNotificationChannel() {
+//
+//    }
 
     // Phương thức để hiển thị danh sách các thông báo
     private void showNotificationList(Notification notification) {

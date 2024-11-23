@@ -149,6 +149,14 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
         executor.execute(() -> {
             List<Notification> notifications = new ArrayList<>();
             // Thêm dữ liệu mẫu vào database (nếu cần)
+
+            database.notificationDao().insertNotification(new Notification(0, "1", "1", "F0000", 1, new Date(), new Date(), "okok"));
+
+
+
+
+
+
             if(datePattern == "" || datePattern == null){
                 // Lấy tất cả dữ liệu từ database
                 notifications.clear();  // Đảm bảo danh sách không còn dữ liệu cũ

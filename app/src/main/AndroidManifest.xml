@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <!-- Quyền thiết lập báo thức -->
 
     <!-- Đối với Android 13 trở lên, yêu cầu người dùng cấp quyền thông báo -->
@@ -43,6 +44,10 @@
 
 
         <receiver android:name=".alarm.AlarmReceiver" android:exported="true" />
+
+        <service android:name=".alarm.SoundService" android:exported="true" />
+
+        <receiver android:name=".alarm.StopMusicReceiver" android:enabled="true" android:exported="false" />
 
 
     </application>
