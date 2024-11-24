@@ -1,4 +1,4 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.CreateNote;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,6 +12,14 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.RadioGroup;
 import androidx.core.content.ContextCompat;
+
+import com.example.utilitycalendar.BottomSheetManager;
+import com.example.utilitycalendar.Helper.CateAdapter;
+import com.example.utilitycalendar.Helper.CateItem;
+import com.example.utilitycalendar.Helper.ColorManager;
+import com.example.utilitycalendar.Helper.DatePickerHelper;
+import com.example.utilitycalendar.Helper.TimePickerHelper;
+import com.example.utilitycalendar.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;

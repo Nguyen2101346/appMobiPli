@@ -1,16 +1,16 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.CreateNote;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-public class CreateNotiActivity extends AppCompatActivity {
+import com.example.utilitycalendar.R;
+
+public class CreateNoteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_noti);
+        setContentView(R.layout.create_note);
 
 //        EditText editTextTitle = findViewById(R.id.editTextTitle);
 //        EditText editTextMessage = findViewById(R.id.editTextMessage);

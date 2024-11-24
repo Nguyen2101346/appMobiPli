@@ -30,7 +30,7 @@
         <activity android:name=".Setting">
             <!-- Cấu hình khác nếu cần -->
         </activity>
-        <activity android:name=".CreateNotiActivity">
+        <activity android:name=".CreateNoti.CreateNotiActivity">
             <!-- Các cài đặt khác nếu cần -->
         </activity>
     </application>

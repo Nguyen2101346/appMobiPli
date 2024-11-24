@@ -1,16 +1,25 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.CreateNoti;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.utilitycalendar.BottomSheetManager;
+import com.example.utilitycalendar.Helper.ColorManager;
+import com.example.utilitycalendar.Helper.DatePickerHelper;
+import com.example.utilitycalendar.Helper.TimePickerHelper;
+import com.example.utilitycalendar.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import org.tensorflow.lite.schema.Model;
 
 public class CreateNotiBottomSheet extends BottomSheetDialog {
 
@@ -19,6 +28,13 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
     private EditText dateText;
     private EditText timeText;
     private BottomSheetManager bottomSheetManager;
+    private String selectedColorHex = "#EB8585";
+
+    public interface OnSaveListener {
+        void onSave(Noti newNotiData);
+    }
+
+    private OnSaveListener onSaveListener;
 
     public CreateNotiBottomSheet(Context context, DatePickerHelper datePickerHelper,TimePickerHelper timePickerHelper,BottomSheetManager bottomSheetManager) {
         super(context);
@@ -30,8 +46,16 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
     }
 
     private void setupLayout() {
+
         View createNotiView = getLayoutInflater().inflate(R.layout.create_noti, null);
         setContentView(createNotiView);
+
+        // Lấy các trường thông tin
+        EditText editTextName = createNotiView.findViewById(R.id.editTextName);
+        dateText = createNotiView.findViewById(R.id.editTextDate);
+        timeText = createNotiView.findViewById(R.id.editTextTime);
+        EditText editTextDetails = createNotiView.findViewById(R.id.editTextDetails);
+
         // Lấy Ngày
         dateText = createNotiView.findViewById(R.id.editTextDate);
         datePickerHelper.initializeDatePicker(dateText);
@@ -50,6 +74,35 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
 
         // Cài đặt ColorPicker
         setupColorPicker(createNotiView);
+
+        // Xử lý nút Lưu
+        ImageView btnSave = createNotiView.findViewById(R.id.btn_Save);
+        btnSave.setOnClickListener(v -> {
+            String name = editTextName.getText().toString();
+            String date = dateText.getText().toString();
+            String time = timeText.getText().toString();
+            String details = editTextDetails.getText().toString();
+
+            if (name.isEmpty() || date.isEmpty() || time.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Tạo đối tượng Noti với giá trị bellIconResId mặc định
+            int bellIconResId = R.drawable.ic_noti_45; // Hoặc biểu tượng chuông mặc định
+            Noti newNotiData = new Noti(name, date, time, details, selectedColorHex, bellIconResId);
+
+            // Gửi dữ liệu qua listener
+            if (onSaveListener != null) {
+                onSaveListener.onSave(newNotiData);
+            }
+
+            // Hiển thị thông báo với dữ liệu đã lưu
+            String savedInfo = "Đã lưu thông báo: " + name + " vào " + date + " lúc " + time;
+            Toast.makeText(getContext(), savedInfo, Toast.LENGTH_SHORT).show();
+
+            dismiss(); // Đóng BottomSheet sau khi lưu
+        });
     }
 
     private void toggleIcon(ImageView icon) {

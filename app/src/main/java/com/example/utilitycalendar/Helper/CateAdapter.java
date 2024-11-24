@@ -1,4 +1,4 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.Helper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.example.utilitycalendar.R;
+
 import java.util.List;
 
 public class CateAdapter extends BaseAdapter {

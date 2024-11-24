@@ -1,4 +1,4 @@
-package com.example.utilitycalendar;
+package com.example.utilitycalendar.Helper;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -47,12 +47,17 @@ public class ColorManager {
             RadioButton radioButton = new RadioButton(context);
             radioButton.setButtonDrawable(null); // Loại bỏ icon mặc định của RadioButton
             radioButton.setBackground(createColorCircle(color.getHexCode())); // Thêm vòng tròn màu
-
             // Cài đặt kích thước và padding cho RadioButton
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
-                    30,30
+                    30,
+//                    100,
+//                    100
+//                    RadioGroup.LayoutParams.WRAP_CONTENT,
+                RadioGroup.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(16, 16, 16, 16);
+//            params.setMargins(20, 20, 20, 20);
+            params.setMargins(15, 20, 20, 15);
+            radioButton.setPadding(20, 20, 20, 20);
             radioButton.setLayoutParams(params);
 
             // Gán sự kiện khi chọn màu
@@ -72,7 +77,8 @@ public class ColorManager {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.OVAL);
         drawable.setColor(Color.parseColor(hexCode));
-        drawable.setSize(30, 30); // Kích thước vòng tròn
+//        drawable.setSize(50, 50); // Kích thước vòng tròn
+        drawable.setSize(30, 30);
         return drawable;
     }
 }
