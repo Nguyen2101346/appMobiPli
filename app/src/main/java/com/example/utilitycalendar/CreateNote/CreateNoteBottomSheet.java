@@ -253,7 +253,7 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
             executor.execute(() -> {
                 Database database = MainActivity.appDatabase;
 
-                Notes Note = new Notes(0, selectedCategory, name, Notes, Finaldate , new Date(), pinned);
+                Notes Note = new Notes(0, selectedCategory, name, Notes, Finaldate , new Date(), pinned,selectedColorHex);
                 database.notesDao().insertNotes(Note);
 
                 List<Notes> listNote = database.notesDao().getAllNotes();
