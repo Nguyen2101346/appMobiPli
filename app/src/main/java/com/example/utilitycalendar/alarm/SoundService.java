@@ -16,7 +16,7 @@ public class SoundService extends Service {
     public void onCreate() {
         super.onCreate();
         // Khởi tạo MediaPlayer để phát âm thanh
-        mediaPlayer = MediaPlayer.create(this, R.raw.sound); // Đảm bảo tệp âm thanh đúng
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound2); // Đảm bảo tệp âm thanh đúng
         mediaPlayer.setLooping(false);  // Âm thanh phát một lần
     }
 

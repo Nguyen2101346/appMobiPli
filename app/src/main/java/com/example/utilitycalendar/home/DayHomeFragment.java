@@ -39,6 +39,7 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
     private Button btnToggleDatePicker;
     private LinearLayout datePickerLayout;
     private RelativeLayout emptyStateLayout;
+    private String checkChooseDay;
 
     Database database = MainActivity.appDatabase;
 
@@ -69,7 +70,7 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
             Notification notificationToDelete = database.notificationDao().getNotificationById(id);
             if (notificationToDelete != null) {
                 database.notificationDao().deleteNotification(notificationToDelete);
-                queryDataByDatePattern("");
+                queryDataByDatePattern(checkChooseDay);
 
             }
         });
@@ -80,6 +81,7 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.day_home, container, false);
+        checkChooseDay = "";
 
         recyclerView = view.findViewById(R.id.day_home_recycler_view);
         btnToggleDatePicker = view.findViewById(R.id.btnToggleDatePicker);
@@ -90,7 +92,7 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        queryDataByDatePattern("");
+        queryDataByDatePattern(checkChooseDay);
 
 
 
@@ -102,6 +104,8 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
                 // Ẩn DatePicker và hiển thị RecyclerView
                 datePickerLayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                if(checkChooseDay == "" || checkChooseDay.isEmpty())
+                    emptyStateLayout.setVisibility(View.VISIBLE);
             } else {
                 // Hiển thị DatePicker và ẩn RecyclerView
                 datePickerLayout.setVisibility(View.VISIBLE);
@@ -123,11 +127,11 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
 
             // Chuyển đổi Date thành chuỗi có định dạng YYYY-MM-DD
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String datePattern = dateFormat.format(selectedDate);
+            checkChooseDay = dateFormat.format(selectedDate);
 
             // Gọi phương thức để truy vấn dữ liệu từ database với chuỗi ngày
 
-            queryDataByDatePattern(datePattern);
+            queryDataByDatePattern(checkChooseDay);
             datePickerLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         });
@@ -150,9 +154,14 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
             List<Notification> notifications = new ArrayList<>();
             // Thêm dữ liệu mẫu vào database (nếu cần)
 
-            database.notificationDao().insertNotification(new Notification(0, "1", "1", "F0000", 1, new Date(), new Date(), "okok"));
-
-
+//            Date now = new Date();
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(now);
+//            calendar.add(Calendar.SECOND, 10); // Thêm 1 phút
+//
+//            Date updatedTime = calendar.getTime();
+//
+//            database.notificationDao().insertNotification(new Notification(0, "1", "1", "F0000", 1, updatedTime, new Date(), "okok"));
 
 
 
@@ -160,7 +169,7 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
             if(datePattern == "" || datePattern == null){
                 // Lấy tất cả dữ liệu từ database
                 notifications.clear();  // Đảm bảo danh sách không còn dữ liệu cũ
-                notifications.addAll(database.notificationDao().getAllNotifications());
+                notifications.addAll(database.notificationDao().getAllNotifications(new Date()));
             }else {
                 notifications.clear();  // Đảm bảo danh sách không còn dữ liệu cũ
                 notifications.addAll(database.notificationDao().getNotificationsByDatePattern(datePattern));
@@ -170,9 +179,12 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
             // Cập nhật UI trên main thread
             getActivity().runOnUiThread(() -> {
                 if (notifications.isEmpty()) {
-                    Log.d("CategoryNoteFragment", "categoryList is empty");
                     emptyStateLayout.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
+
+                    checkChooseDay = "";
+                    adapter = new DayHomeAdapter(getContext(), notifications, this);
+                    recyclerView.setAdapter(adapter);
                 } else {
                     adapter = new DayHomeAdapter(getContext(), notifications, this);
 

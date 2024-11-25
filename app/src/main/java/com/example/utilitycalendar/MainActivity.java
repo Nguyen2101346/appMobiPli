@@ -25,6 +25,7 @@ import com.example.utilitycalendar.home.DayHomeFragment;
 import com.example.utilitycalendar.note.CategoryNoteFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = Database.getInstance(getApplicationContext());
 
-
         //thong bao
 
 
@@ -58,12 +58,13 @@ public class MainActivity extends AppCompatActivity {
         Executor executorMain = Executors.newSingleThreadExecutor();
         executorMain.execute(() -> {
             // Lấy danh sách thông báo từ cơ sở dữ liệu
-            List<Notification> notificationList = appDatabase.notificationDao().getAllNotifications();
+            List<Notification> notificationList = appDatabase.notificationDao().getAllNotifications(new Date());
 
             // Lặp qua danh sách thông báo
             for (Notification notification : notificationList) {
                 // Truyền từng Notification vào hàm showNotificationList
                 showNotificationList(notification);
+                //cancelNotification(notification);
             }
         });
 
@@ -134,6 +135,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+    private void cancelNotification(Notification notification) {
+        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+
+        // Gửi cùng thông tin như khi tạo thông báo
+        intent.putExtra("title", notification.getTittle());
+        intent.putExtra("content", notification.getDetails());
+
+        // Tạo PendingIntent với cùng ID và FLAG
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, notification.getNoti_id(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Hủy báo thức
+        if (alarmMgr != null) {
+            alarmMgr.cancel(pendingIntent);
+        }
+
+        // Hủy PendingIntent
+        pendingIntent.cancel();
+    }
+
+
 
 
 }

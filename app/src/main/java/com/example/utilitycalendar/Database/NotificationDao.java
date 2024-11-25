@@ -23,8 +23,8 @@ public interface NotificationDao {
     @Query("SELECT * FROM Notification WHERE Noti_id = :id")
     Notification getNotificationById(int id);
 
-    @Query("SELECT * FROM Notification")
-    List<Notification> getAllNotifications();
+    @Query("SELECT * FROM Notification WHERE Noti_Date >= :now ORDER BY Noti_Date ASC")
+    List<Notification> getAllNotifications(Date now);
 
     @Query("SELECT * FROM Notification WHERE strftime('%Y-%m-%d', Noti_Date / 1000, 'unixepoch') LIKE :datePattern")
     List<Notification> getNotificationsByDatePattern(String datePattern);
