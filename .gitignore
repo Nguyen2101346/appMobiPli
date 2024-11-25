@@ -1,15 +1,43 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Gradle build folder
+.gradle/
+build/
+
+# Local configuration file (specific to your environment)
 local.properties
+
+# Log files
+*.log
+
+# Android Studio specific folders
+.idea/
+*.iml
+
+# Bytecode and compiled files
+*.class
+
+# IntelliJ workspace files
+.idea/workspace.xml
+.idea/libraries/
+
+# Generated files
+captures/
+.externalNativeBuild/
+
+# Gradle Wrapper files (if unnecessary)
+gradle/wrapper/gradle-wrapper.jar
+
+# Keystore files
+*.jks
+*.keystore
+
+# NDK
+.cxx/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+*.jar
+*.aar
+*.apk
