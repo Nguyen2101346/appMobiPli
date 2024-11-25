@@ -3,6 +3,7 @@ package com.example.utilitycalendar.CreateNoti;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +14,22 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.example.utilitycalendar.BottomSheetManager;
+import com.example.utilitycalendar.Database.Database;
+import com.example.utilitycalendar.Database.Notification;
 import com.example.utilitycalendar.Helper.ColorManager;
 import com.example.utilitycalendar.Helper.DatePickerHelper;
 import com.example.utilitycalendar.Helper.TimePickerHelper;
+import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import org.tensorflow.lite.schema.Model;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class CreateNotiBottomSheet extends BottomSheetDialog {
 
@@ -29,6 +39,7 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
     private EditText timeText;
     private BottomSheetManager bottomSheetManager;
     private String selectedColorHex = "#EB8585";
+    private int reminder = 1;
 
     public interface OnSaveListener {
         void onSave(Noti newNotiData);
@@ -36,12 +47,11 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
 
     private OnSaveListener onSaveListener;
 
-    public CreateNotiBottomSheet(Context context, DatePickerHelper datePickerHelper,TimePickerHelper timePickerHelper,BottomSheetManager bottomSheetManager) {
+    public CreateNotiBottomSheet(Context context, DatePickerHelper datePickerHelper, TimePickerHelper timePickerHelper, BottomSheetManager bottomSheetManager) {
         super(context);
         this.datePickerHelper = datePickerHelper;
         this.timePickerHelper = timePickerHelper;
         this.bottomSheetManager = bottomSheetManager;
-
         setupLayout();
     }
 
@@ -57,16 +67,16 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
         EditText editTextDetails = createNotiView.findViewById(R.id.editTextDetails);
 
         // Lấy Ngày
-        dateText = createNotiView.findViewById(R.id.editTextDate);
         datePickerHelper.initializeDatePicker(dateText);
         createNotiView.findViewById(R.id.btn_DatePicker).setOnClickListener(v -> datePickerHelper.showDatePicker());
+
         // Lấy giờ
-        timeText = createNotiView.findViewById(R.id.editTextTime);
         createNotiView.findViewById(R.id.btn_TimePicker).setOnClickListener(v -> timePickerHelper.openTimePicker(timeText));
+
         // Xử lý nút back
         createNotiView.findViewById(R.id.backButton).setOnClickListener(v -> {
-            dismiss(); // Đóng CreateNotiBottomSheet
-            bottomSheetManager.showMainBottomSheet(); // Hiển thị lại bottomSheetDialog
+            dismiss();
+            bottomSheetManager.showMainBottomSheet();
         });
 
         ImageView notiIcon = createNotiView.findViewById(R.id.notiIcon);
@@ -78,18 +88,76 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
         // Xử lý nút Lưu
         ImageView btnSave = createNotiView.findViewById(R.id.btn_Save);
         btnSave.setOnClickListener(v -> {
+
             String name = editTextName.getText().toString();
             String date = dateText.getText().toString();
             String time = timeText.getText().toString();
             String details = editTextDetails.getText().toString();
 
+            // Kiểm tra thông tin nhập vào
             if (name.isEmpty() || date.isEmpty() || time.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Tạo đối tượng Noti với giá trị bellIconResId mặc định
-            int bellIconResId = R.drawable.ic_noti_45; // Hoặc biểu tượng chuông mặc định
+            // Định dạng ngày và giờ
+            String dateInputFormat = "EEEE - dd/MM/yyyy";  // Định dạng ngày
+            String timeInputFormat = "hh 'giờ' mm 'phút' a"; // Định dạng giờ (Sáng/Chiều)
+            String dateOutputFormat = "dd-MM-yyyy";  // Định dạng ngày đầu ra
+            String timeOutputFormat = "HH:mm";  // Định dạng giờ đầu ra
+            Date Finaldate;
+
+            SimpleDateFormat dateInputFormatter = new SimpleDateFormat(dateInputFormat,new Locale("vi", "VN"));
+            SimpleDateFormat timeInputFormatter = new SimpleDateFormat(timeInputFormat,Locale.ENGLISH);
+            SimpleDateFormat dateOutputFormatter = new SimpleDateFormat(dateOutputFormat,Locale.ENGLISH);
+            SimpleDateFormat timeOutputFormatter = new SimpleDateFormat(timeOutputFormat,Locale.ENGLISH);
+
+            try {
+                // Làm sạch chuỗi ngày và giờ trước khi phân tích
+                date = date.trim();
+                time = time.trim();
+                time = time.replace("Sáng", "AM").replace("Chiều", "PM");
+//                Log.d("Time After Replace", "Giờ sau khi thay thế: " + time);
+//                Log.d("Date After Replace", "Ngày sau khi thay thế: " + date);
+                String formattedDate;
+                String formattedTime;
+                // Kiểm tra nếu định dạng ngày khớp với mẫu
+                try {
+                    Date Tdate = dateInputFormatter.parse(date);  // Kiểm tra ngày
+                    formattedDate = dateOutputFormatter.format(Tdate);
+                    Log.d("Fuck u","Chuỗi ngày đã chuyển đổi: " + formattedDate);
+                } catch (ParseException e) {
+                    Toast.makeText(getContext(), "Định dạng ngày không hợp lệ! Hãy kiểm tra lại.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    return;  // Dừng lại nếu ngày sai
+                }
+                try {
+                    // Định dạng đúng và phân tích chuỗi giờ
+//                    SimpleDateFormat timeInputFormatter = new SimpleDateFormat("hh 'giờ' mm 'phút' a", Locale.ENGLISH);
+                    Date TTime = timeInputFormatter.parse(time);
+                    // Lưu thời gian đã phân tích
+                    formattedTime = timeOutputFormatter.format(TTime);
+                    Log.d("Fuck u","Chuỗi ngày đã chuyển đổi: " + formattedTime);
+                    // Kiểm tra giờ
+                } catch (ParseException e) {
+                    Toast.makeText(getContext(), "Định dạng giờ không hợp lệ! Hãy kiểm tra lại.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                    return;  // Dừng lại nếu giờ sai
+                }
+
+                String dataDate = formattedDate + " " + formattedTime;
+                Log.d("Data Date", "Ngày và giờ lưu: " + dataDate);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
+                Finaldate = dateFormat.parse(dataDate);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+
+            // Tạo đối tượng Noti
+            int bellIconResId = R.drawable.ic_noti_45;
             Noti newNotiData = new Noti(name, date, time, details, selectedColorHex, bellIconResId);
 
             // Gửi dữ liệu qua listener
@@ -97,60 +165,75 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
                 onSaveListener.onSave(newNotiData);
             }
 
-            // Hiển thị thông báo với dữ liệu đã lưu
-            String savedInfo = "Đã lưu thông báo: " + name + " vào " + date + " lúc " + time;
-            Toast.makeText(getContext(), savedInfo, Toast.LENGTH_SHORT).show();
+            // Lưu vào cơ sở dữ liệu
+            Executor executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                Database database = MainActivity.appDatabase;
 
+                Notification notification = new Notification(0, name, details, selectedColorHex, reminder, Finaldate , new Date(), "default_Ring");
+                database.notificationDao().insertNotification(notification);
+
+                List<Notification> listNoti = database.notificationDao().getAllNotifications();
+                for (Notification ItemNoti : listNoti) {
+                    Log.d("Notification Check", "Ngày: " + ItemNoti.getNotiDate() + " | Giờ: " + ItemNoti.getNotiTime() + " | Color:  " + ItemNoti.getColor() );
+                }
+            });
+
+            // Hiển thị thông báo thành công
+            Toast.makeText(getContext(), "Đã lưu thông báo: " + name, Toast.LENGTH_SHORT).show();
             dismiss(); // Đóng BottomSheet sau khi lưu
         });
     }
 
     private void toggleIcon(ImageView icon) {
-        // Kiểm tra nếu ImageView có tag không
         Boolean isNotified = (Boolean) icon.getTag();
         if (isNotified == null || !isNotified) {
             icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_noti_45));
-            icon.setTag(true); // Đánh dấu icon đã hiển thị thông báo
+            icon.setTag(true);
+            reminder = 1;
         } else {
             icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_unnoti_45));
-            icon.setTag(false); // Đánh dấu icon đã tắt thông báo
+            icon.setTag(false);
+            reminder = 0;
         }
+
+        // Ghi log giá trị reminder
+        Log.d("Reminder Status", "Reminder value: " + reminder);
     }
 
     private void setupColorPicker(View createNotiView) {
-        // Tìm RadioGroup trong layout
         RadioGroup colorRadioGroup = createNotiView.findViewById(R.id.radioGroup);
-        // Tìm ImageView để thay đổi màu
         ImageView checkColor = createNotiView.findViewById(R.id.checkColor);
-        // Khởi tạo ColorManager
         ColorManager colorManager = new ColorManager();
 
-        // Tạo RadioGroup với danh sách màu
         colorManager.createColorRadioGroup(getContext(), colorRadioGroup, selectedColor -> {
-            // Xử lý khi màu được chọn
             Toast.makeText(getContext(), "Màu đã chọn: " + selectedColor.getName(), Toast.LENGTH_SHORT).show();
-
-            // Thay đổi màu hình của ImageView checkColor
-            changeImageColor(checkColor, selectedColor.getHexCode());
+            selectedColorHex = selectedColor.getHexCode();
+            changeImageColor(checkColor, selectedColorHex);
         });
     }
-    private void changeImageColor(ImageView imageView, String hexColor) {
-        // Lấy Drawable hiện tại của ImageView
-        Drawable drawable = imageView.getDrawable();
 
+    private void changeImageColor(ImageView imageView, String hexColor) {
+        Drawable drawable = imageView.getDrawable();
         if (drawable == null) {
-            // Nếu chưa có Drawable, gán một Drawable mặc định vào ImageView
             drawable = ContextCompat.getDrawable(imageView.getContext(), R.drawable.ic_color_lens_50);
             imageView.setImageDrawable(drawable);
         }
-
-        // Tạo bản sao của Drawable hiện tại để tránh thay đổi chung cho tất cả các ImageView
         Drawable drawableCopy = drawable.mutate();
-
-        // Áp dụng màu mới cho bản sao của Drawable
         drawableCopy.setTint(Color.parseColor(hexColor));
-
-        // Gán lại Drawable cho ImageView
         imageView.setImageDrawable(drawableCopy);
+    }
+
+    // Các lớp wrapper cho Date và Time
+    class DateWrapper {
+        private Date date;
+        public Date getDate() { return date; }
+        public void setDate(Date date) { this.date = date; }
+    }
+
+    class TimeWrapper {
+        private Date time;
+        public Date getTime() { return time; }
+        public void setTime(Date time) { this.time = time; }
     }
 }

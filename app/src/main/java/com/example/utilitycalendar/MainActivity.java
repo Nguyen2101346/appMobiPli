@@ -5,17 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.example.utilitycalendar.Database.Database;
 import com.example.utilitycalendar.Helper.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Database appDatabase;
+
     private BottomSheetManager bottomSheetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        appDatabase = Database.getInstance(getApplicationContext());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -53,10 +53,10 @@ public abstract class Database extends RoomDatabase {
         List<NoteCategories> categories = database.noteCategoriesDao().getAllNoteCategories();
         if (categories.isEmpty()) {
             // Nếu bảng trống, thêm dữ liệu mẫu
-            NoteCategories newCategory1 = new NoteCategories("hoctap", "Học tập", 5, "home_24px");
-            NoteCategories newCategory2 = new NoteCategories("congviec", "Công việc", 5, "home_24px");
-            NoteCategories newCategory3 = new NoteCategories("giaitri", "Giải trí", 5, "home_24px");
-            NoteCategories newCategory4 = new NoteCategories("thuongngay", "Thường ngày", 5, "home_24px");
+            NoteCategories newCategory1 = new NoteCategories("hoctap", "Học tập", 5, "ic_cate_study_60");
+            NoteCategories newCategory2 = new NoteCategories("congviec", "Công việc", 5, "ic_cate_work_60");
+            NoteCategories newCategory3 = new NoteCategories("giaitri", "Giải trí", 5, "ic_cate_entertain_60");
+            NoteCategories newCategory4 = new NoteCategories("thuongngay", "Thường ngày", 5, "ic_cate_calendar_50");
             database.noteCategoriesDao().insertNoteCategories(newCategory1);
             database.noteCategoriesDao().insertNoteCategories(newCategory2);
             database.noteCategoriesDao().insertNoteCategories(newCategory3);

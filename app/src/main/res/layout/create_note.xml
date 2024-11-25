@@ -76,6 +76,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/editTextName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
@@ -96,6 +97,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/editTextNote"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Thêm ghi chú"
@@ -125,7 +127,7 @@
                     app:tint="@color/white" />
             </FrameLayout>
             <FrameLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/LayoutAddCate"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -298,6 +300,7 @@
                                 android:textStyle="bold" />
 
                             <Switch
+                                android:id="@+id/PinSwitch"
                                 android:layout_width="70dp"
                                 android:layout_height="50dp"
                                 android:thumbTint="@color/gray"
@@ -356,6 +359,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/btn_Save"
                             android:layout_width="100dp"
                             android:layout_height="50dp"
                             android:background="@drawable/btnbg_green"
