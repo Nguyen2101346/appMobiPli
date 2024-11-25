@@ -1,11 +1,16 @@
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="jbr-21" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+>>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
@@ -13,4 +18,6 @@
       </ProjectState>
     </option>
   </component>
+=======
+>>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e
 </project>

@@ -1,6 +1,9 @@
 package com.example.utilitycalendar.CreateNoti;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -21,6 +24,7 @@ import com.example.utilitycalendar.Helper.DatePickerHelper;
 import com.example.utilitycalendar.Helper.TimePickerHelper;
 import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
+import com.example.utilitycalendar.alarm.AlarmReceiver;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.ParseException;
@@ -170,13 +174,12 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
             executor.execute(() -> {
                 Database database = MainActivity.appDatabase;
 
-                Notification notification = new Notification(0, name, details, selectedColorHex, reminder, Finaldate , new Date(), "default_Ring");
-                database.notificationDao().insertNotification(notification);
+                Notification notification = new Notification(name, details, selectedColorHex, reminder, Finaldate , new Date(), "default_Ring");
+                long nitiId = database.notificationDao().insertNotification(notification);
+                notification.Noti_id = (int) nitiId;
 
-                List<Notification> listNoti = database.notificationDao().getAllNotifications();
-                for (Notification ItemNoti : listNoti) {
-                    Log.d("Notification Check", "Ngày: " + ItemNoti.getNotiDate() + " | Giờ: " + ItemNoti.getNotiTime() + " | Color:  " + ItemNoti.getColor() );
-                }
+
+                showNotificationList(notification);
             });
 
             // Hiển thị thông báo thành công
@@ -225,15 +228,32 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
     }
 
     // Các lớp wrapper cho Date và Time
-    class DateWrapper {
-        private Date date;
-        public Date getDate() { return date; }
-        public void setDate(Date date) { this.date = date; }
+    public void showNotificationList(Notification notification) {
+        AlarmManager alarmMgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlarmReceiver.class);
+
+        // Gửi thông tin thông báo vào Intent
+        intent.putExtra("title", notification.getTittle());
+        intent.putExtra("content", notification.getDetails());
+
+        Log.d("CheckCreate", String.valueOf(notification.getNoti_id()));
+        // PendingIntent để thực thi AlarmReceiver
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), notification.getNoti_id(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Thiết lập thời gian báo thức
+        long notificationTimeMillis = notification.getNotiDate().getTime();
+        alarmMgr.setExact(AlarmManager.RTC_WAKEUP, notificationTimeMillis, pendingIntent);
+
+
+
     }
 
-    class TimeWrapper {
-        private Date time;
-        public Date getTime() { return time; }
-        public void setTime(Date time) { this.time = time; }
-    }
+
+
+
+
+
+
+
+
 }

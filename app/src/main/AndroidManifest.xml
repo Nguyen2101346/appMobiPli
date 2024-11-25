@@ -2,6 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <!-- Quyền cần thiết -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <!-- Quyền thiết lập báo thức -->
+
+    <!-- Đối với Android 13 trở lên, yêu cầu người dùng cấp quyền thông báo -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,27 +27,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UtilityCalendar"
         tools:targetApi="31">
+
+
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Note">
-            <!-- Cấu hình khác nếu cần -->
-        </activity>
-        <activity android:name=".Flag">
-            <!-- Cấu hình khác nếu cần -->
-        </activity>
-        <activity android:name=".Setting">
-            <!-- Cấu hình khác nếu cần -->
-        </activity>
-        <activity android:name=".CreateNoti.CreateNotiActivity">
-            <!-- Các cài đặt khác nếu cần -->
-        </activity>
-    </application>
 
+        <!-- Các Activity khác -->
+        <activity android:name=".Note" />
+        <activity android:name=".Flag" />
+        <activity android:name=".Setting" />
+
+        <activity android:name=".CreateNoti.CreateNotiActivity">
+        <!-- Các cài đặt khác nếu cần -->
+        </activity>
+
+
+
+        <receiver android:name=".alarm.AlarmReceiver" android:exported="true" />
+
+        <service android:name=".alarm.SoundService" android:exported="true" />
+
+        <receiver android:name=".alarm.StopMusicReceiver" android:enabled="true" android:exported="false" />
+
+
+    </application>
 </manifest>

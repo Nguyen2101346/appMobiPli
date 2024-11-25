@@ -17,21 +17,6 @@ public class Notification {
     public String Color;
     public int Reminder;
 
-    public Notification(int noti_id, String tittle, String details, String color, int reminder, Date notiDate, Date notiTime, String ring_Name) {
-        Noti_id = noti_id;
-        Tittle = tittle;
-        Details = details;
-        Color = color;
-        Reminder = reminder;
-        NotiDate = notiDate;
-        NotiTime = notiTime;
-        Ring_Name = ring_Name;
-    }
-
-    public Notification(){
-
-    }
-
     @ColumnInfo(name = "Noti_Date")
     public Date NotiDate;
 
@@ -39,7 +24,6 @@ public class Notification {
     public Date NotiTime;
 
     public String Ring_Name;
-
 
 
     public int getNoti_id() {
@@ -104,6 +88,21 @@ public class Notification {
 
     public void setRing_Name(String ring_Name) {
         Ring_Name = ring_Name;
+    }
+
+
+    public Notification(String tittle, String details, String color, int reminder, Date notiDate, Date notiTime, String ring_Name) {
+        Tittle = tittle;
+        Details = details;
+        Color = color;
+        Reminder = reminder;
+        NotiDate = notiDate;
+        NotiTime = notiTime;
+        Ring_Name = ring_Name;
+    }
+
+    public Notification(){
+
     }
 
 

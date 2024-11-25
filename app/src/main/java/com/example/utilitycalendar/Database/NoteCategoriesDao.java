@@ -18,5 +18,8 @@ public interface NoteCategoriesDao {
     @Query("DELETE FROM Note_category")
     void deleteAllNoteCategories();
 
+    @Query("UPDATE Note_category SET Note_count = Note_count + 1 WHERE Note_id = :categoryId")
+    void updateNoteCategories(String categoryId);
+
 
 }

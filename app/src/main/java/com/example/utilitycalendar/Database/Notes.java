@@ -2,6 +2,7 @@ package com.example.utilitycalendar.Database;
 
 import android.graphics.Color;
 
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -14,33 +15,12 @@ public class Notes {
     @PrimaryKey(autoGenerate = true)
     public int Note_id;
 
+
+
     public String Cate_name;
-
-    public Notes(int note_id, String cate_name, String tittle, String content, Date noteDate, Date noteTime, int pinned,String color) {
-        Note_id = note_id;
-        Cate_name = cate_name;
-        Tittle = tittle;
-        Content = content;
-        NoteDate = noteDate;
-        NoteTime = noteTime;
-        Pinned = pinned;
-        Color = color;
-    }
-    public Notes (){
-
-    }
     public String Tittle;
     public String Content;
 
-    public String getColor() {
-        return Color;
-    }
-
-    public void setColor(String color) {
-        Color = color;
-    }
-
-    public String Color;
     @ColumnInfo(name = "Note_Date")
     public Date NoteDate;
 
@@ -49,6 +29,7 @@ public class Notes {
 
     public int Pinned;
 
+    public String Color;
     public int getNote_id() {
         return Note_id;
     }
@@ -105,4 +86,27 @@ public class Notes {
         Pinned = pinned;
     }
 
+    public String getColor() {
+        return Color;
+    }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
+    public Notes(){
+
+    }
+
+
+    public Notes(int note_id, String cate_name, String tittle, String content, Date noteDate, Date noteTime, int pinned, String color) {
+        Note_id = note_id;
+        Cate_name = cate_name;
+        Tittle = tittle;
+        Content = content;
+        NoteDate = noteDate;
+        NoteTime = noteTime;
+        Pinned = pinned;
+        Color = color;
+    }
 }

@@ -47,7 +47,7 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
     private EditText dateText;
     private EditText timeText;
     private BottomSheetManager bottomSheetManager;
-    private String selectedCategory = "Hoctap";
+    private String selectedCategory = "hoctap";
     private String selectedColorHex = "#EB8585";
     private int pinned = 1;
 
@@ -255,6 +255,10 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
 
                 Notes Note = new Notes(0, selectedCategory, name, Notes, Finaldate , new Date(), pinned,selectedColorHex);
                 database.notesDao().insertNotes(Note);
+                database.noteCategoriesDao().updateNoteCategories(selectedCategory);
+
+
+                // Hiển thị thông báo thành công
 
                 List<Notes> listNote = database.notesDao().getAllNotes();
                 for (Notes ItemNote : listNote) {
@@ -319,4 +323,10 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
         public Date getTime() { return time; }
         public void setTime(Date time) { this.time = time; }
     }
+
+
+
+
+
+
 }

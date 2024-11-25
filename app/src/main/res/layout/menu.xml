@@ -16,6 +16,7 @@
         android:titleTextColor="@android:color/white"
         android:padding="16dp"/>
 
+
     <!-- Nội dung chính của ứng dụng -->
     <FrameLayout
         android:id="@+id/frame_layout"

@@ -22,6 +22,10 @@ public interface NotesDao {
     @Query("SELECT * FROM Notes WHERE Note_id = :id")
     Notes getNotesById(int id);
 
+
+    @Query("SELECT * FROM Notes WHERE Cate_name = :cate_id")
+    List<Notes> getNotesByCateId(String cate_id);
+
     @Query("SELECT * FROM Notes")
     List<Notes> getAllNotes();
 

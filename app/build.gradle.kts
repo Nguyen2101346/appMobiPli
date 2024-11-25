@@ -29,6 +29,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+//=======
+//        sourceCompatibility = JavaVersion.VERSION_1_8
+//        targetCompatibility = JavaVersion.VERSION_1_8
+//>>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e
     }
 }
 
@@ -43,6 +47,13 @@ dependencies {
     implementation(libs.sqlite)
     implementation(libs.room.runtime)
     implementation(libs.litert.metadata)
+//=======
+//    implementation ("com.google.android.material:material:1.9.0")
+//    implementation(libs.activity)
+//    implementation(libs.constraintlayout)
+//    implementation(libs.room.common)
+//    implementation(libs.room.runtime)
+//>>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

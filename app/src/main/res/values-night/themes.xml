@@ -1,6 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+
     <style name="Base.Theme.UtilityCalendar" parent="Theme.Material3.DayNight.NoActionBar">
+<!--=======-->
+<!--    <style name="Base.Theme.UtilityCalendar" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--&gt;>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e-->
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>

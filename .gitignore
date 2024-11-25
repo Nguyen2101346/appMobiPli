@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.iml
 .gradle
 /local.properties
@@ -13,3 +14,48 @@
 .externalNativeBuild
 .cxx
 local.properties
+=======
+# Gradle build folder
+.gradle/
+build/
+
+# Local configuration file (specific to your environment)
+local.properties
+
+# Log files
+*.log
+
+# Android Studio specific folders
+.idea/
+*.iml
+
+# Bytecode and compiled files
+*.class
+
+# IntelliJ workspace files
+.idea/workspace.xml
+.idea/libraries/
+
+# Generated files
+captures/
+.externalNativeBuild/
+
+# Gradle Wrapper files (if unnecessary)
+gradle/wrapper/gradle-wrapper.jar
+
+# Keystore files
+*.jks
+*.keystore
+
+# NDK
+.cxx/
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+# Dependency directories
+*.jar
+*.aar
+*.apk
+>>>>>>> 9e9d98e5aa02045ffb984132dcefa3132ba17a4e

@@ -15,4 +15,9 @@
     <color name="lightyellow">#F6DF9B</color>
     <color name="blue">#6191F4</color>
     <color name="lightblue">#77F9F9</color>
-    </resources>
+
+    <color name="custom_yellow">#FFFF00</color>
+    <color name="light_gray">#303F9F</color>
+
+</resources>
+
