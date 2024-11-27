@@ -15,16 +15,37 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.02"
+        android:layout_marginBottom="10dp"
+        >
         <TextView
             android:id="@+id/note_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
+
+            android:gravity="right|center_vertical"
             android:paddingBottom="0dp"
+            android:layout_weight="0.8"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_Delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top|right"
+            android:gravity="end"
+            android:src="@drawable/ic_clear_50"
+            android:layout_weight="0.2"
+            />
+
+
+    </FrameLayout>
 
         <View
             android:layout_width="match_parent"

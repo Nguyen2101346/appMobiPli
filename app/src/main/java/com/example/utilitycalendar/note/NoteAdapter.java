@@ -61,6 +61,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         // Xử lý sự kiện khi nhấn vào item
         holder.itemView.setOnClickListener(v -> listener.onNoteClick(note));
+        holder.noteDelete.setOnClickListener(view -> listener.onDeleteClick(note.getNote_id()));
     }
 
     @Override
@@ -72,7 +73,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     // Định nghĩa lớp ViewHolder
     public static class NoteViewHolder extends RecyclerView.ViewHolder {
         public TextView noteTitle, noteContent, noteDate;
-        public ImageView noteImage;
+        public ImageView noteImage, noteDelete;
 
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,11 +82,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             noteContent = itemView.findViewById(R.id.note_content);
             noteDate = itemView.findViewById(R.id.note_date);
             noteImage = itemView.findViewById(R.id.note_image);
+            noteDelete = itemView.findViewById(R.id.btn_Delete);
         }
     }
 
     // Định nghĩa giao diện cho click listener (nếu cần)
     public interface OnNoteClickListener {
         void onNoteClick(Notes note);
+        void onDeleteClick(int id);
     }
 }

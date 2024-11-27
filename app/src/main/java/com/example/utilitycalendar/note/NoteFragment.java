@@ -11,25 +11,68 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.utilitycalendar.BottomSheetManager;
 import com.example.utilitycalendar.Database.Database;
 import com.example.utilitycalendar.Database.NoteCategories;
 import com.example.utilitycalendar.Database.Notes;
+import com.example.utilitycalendar.Database.Notification;
 import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
+import com.example.utilitycalendar.home.DayHomeAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends Fragment  implements NoteAdapter.OnNoteClickListener {
     private TextView categoryIdTextView;
 
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
 
     Database database = MainActivity.appDatabase;
+
+
+    public BottomSheetManager bottomSheetManager;
+
+
+
+
+    @Override
+    public void onNoteClick(Notes notes) {
+
+        // Truyền dữ liệu qua Bundle
+        // Truyền id của category
+        bottomSheetManager = new BottomSheetManager((AppCompatActivity) requireActivity());
+
+
+        bottomSheetManager.showEditNote(notes);
+
+
+    }
+
+
+    @Override
+    public void onDeleteClick(int id) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            // Xử lý khi người dùng nhấn vào nút xóa
+            Notes notes = database.notesDao().getNotesById(id);
+            if (notes != null) {
+
+                database.notesDao().deleteNotes(notes);
+                database.noteCategoriesDao().updateRemoveNoteCategories(notes.getCate_name());
+                queryData();
+
+
+            }
+
+        });
+    }
+
 
 
     @Override
@@ -41,18 +84,24 @@ public class NoteFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
-
+        queryData();
 
 //        noteList = new ArrayList<>();
         // Thêm dữ liệu mẫu
 
 
+        return view;
 
+
+    }
+
+
+
+
+    public void queryData(){
         if (getArguments() != null) {
             String categoryId = getArguments().getString("categoryId");
             // Hiển thị id
-
-
             Executor executor = Executors.newSingleThreadExecutor();
 
             executor.execute(() -> {
@@ -62,28 +111,24 @@ public class NoteFragment extends Fragment {
                 // Lấy tất cả dữ liệu từ database
                 List<Notes> notes = database.notesDao().getNotesByCateId(categoryId);
 
-                // Cập nhật UI trên main thread
                 getActivity().runOnUiThread(() -> {
                     if (notes.isEmpty()) {
-                        Log.d("CategoryNoteFragment", "categoryList is empty");
-                    } else {
-                        adapter = new NoteAdapter(getContext(), notes, note -> {
-                            // Xử lý khi nhấn vào một danh mục
-                            NoteFragment fragment = new NoteFragment();
 
-                        });
+                        adapter = new NoteAdapter(getContext(), notes, (NoteAdapter.OnNoteClickListener) this);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter = new NoteAdapter(getContext(), notes, (NoteAdapter.OnNoteClickListener) this);
 
                         recyclerView.setAdapter(adapter);
                     }
                 });
+
+                // Cập nhật UI trên main thread
+
             });
 
 
         }
-
-        return view;
-
-
     }
 
 

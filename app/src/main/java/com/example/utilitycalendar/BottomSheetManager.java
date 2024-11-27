@@ -2,11 +2,17 @@
 
 package com.example.utilitycalendar;
 
+import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.utilitycalendar.CreateNote.CreateNoteBottomSheet;
+import com.example.utilitycalendar.CreateNote.ShowEditNote;
 import com.example.utilitycalendar.CreateNoti.CreateNotiBottomSheet;
+import com.example.utilitycalendar.Database.Notes;
 import com.example.utilitycalendar.Helper.DatePickerHelper;
 import com.example.utilitycalendar.Helper.TimePickerHelper;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -35,6 +41,13 @@ public class BottomSheetManager {
         bottomSheetView.findViewById(R.id.cancelButton).setOnClickListener(v -> bottomSheetDialog.dismiss());
         bottomSheetDialog.show();
     }
+
+    public void showEditNote(Notes notes) {
+
+        ShowEditNote showEditNote = new ShowEditNote(activity, notes, this );
+        showEditNote.show();
+    }
+
 
     private void openCreateNotiBottomSheet() {
         // Truyền cả DatePickerHelper và TimePickerHelper vào constructor mới

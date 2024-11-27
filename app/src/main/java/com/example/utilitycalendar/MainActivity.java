@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         appDatabase = Database.getInstance(getApplicationContext());
 
-        getApplicationContext().deleteDatabase("app_database");
+//        getApplicationContext().deleteDatabase("app_database");
 
         //thong bao
 
