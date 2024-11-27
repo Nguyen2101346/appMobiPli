@@ -32,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -49,7 +50,7 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
     private BottomSheetManager bottomSheetManager;
     private String selectedCategory = "hoctap";
     private String selectedColorHex = "#EB8585";
-    private int pinned = 1;
+    private int pinned = 0;
 
     public interface OnSaveListener {
         void onSave(Note newNoteData);
@@ -142,10 +143,10 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
 
         // Prepare data for GridView items
         List<CateItem> cateItems = new ArrayList<>();
-        cateItems.add(new CateItem(R.drawable.ic_cate_study_60, "Học tập"));
-        cateItems.add(new CateItem(R.drawable.ic_cate_work_60, "Công việc"));
-        cateItems.add(new CateItem(R.drawable.ic_cate_entertain_60, "Giải trí"));
-        cateItems.add(new CateItem(R.drawable.ic_cate_calendar_50, "Thường ngày"));
+        cateItems.add(new CateItem(R.drawable.ic_cate_study_60, "Học tập", "hoctap"));
+        cateItems.add(new CateItem(R.drawable.ic_cate_work_60, "Công việc", "congviec"));
+        cateItems.add(new CateItem(R.drawable.ic_cate_entertain_60, "Giải trí", "giaitri"));
+        cateItems.add(new CateItem(R.drawable.ic_cate_calendar_50, "Thường ngày", "thuongngay"));
 
         // Set up adapter for GridView
         CateAdapter adapter = new CateAdapter(getContext(), cateItems);
@@ -161,12 +162,15 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
             // Thay đổi ImageView của nút AddCate thành icon của danh mục đã chọn
             AddCate.setImageResource(selectedCate.getIconResId());
 
+            selectedCategory = selectedCate.getSelectedCategory();
+
             // Ẩn layout thêm danh mục và hiển thị lại nút AddCate với icon mới
             LayoutAddCate.setVisibility(View.GONE);
             AddCate.setVisibility(View.VISIBLE);
 
             // Hiển thị thông báo về danh mục đã chọn (tùy chọn)
-            Toast.makeText(getContext(), "Bạn đã chọn: " + selectedCate.getHiddenName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Bạn đã chọn: " + hiddenName, Toast.LENGTH_SHORT).show();
+
         });
 
         // Xử lý nút Lưu
@@ -183,7 +187,24 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
                 Toast.makeText(getContext(), "Hãy điền tiêu đề và tên ghi chú!", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (date.isEmpty() || time.isEmpty()) {
+                Calendar calendar = Calendar.getInstance(); // Lấy thời gian hiện tại
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
+                if (date.isEmpty()) {
+                    date = dateFormat.format(calendar.getTime()); // Gán ngày hiện tại
+                    dateText.setText(date); // Hiển thị ngày trong giao diện (nếu cần)
+                }
+                if (time.isEmpty()) {
+                    time = timeFormat.format(calendar.getTime()); // Gán giờ hiện tại
+                    timeText.setText(time); // Hiển thị giờ trong giao diện (nếu cần)
+                }
+
+                String dataDate = date + " " + time;
+                Log.d("Data Date", "Ngày và giờ lưu: " + dataDate);
+
+            }
             // Định dạng ngày và giờ
             String dateInputFormat = "EEEE - dd/MM/yyyy";  // Định dạng ngày
             String timeInputFormat = "hh 'giờ' mm 'phút' a"; // Định dạng giờ (Sáng/Chiều)
@@ -257,12 +278,11 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
                 database.notesDao().insertNotes(Note);
                 database.noteCategoriesDao().updateNoteCategories(selectedCategory);
 
-
                 // Hiển thị thông báo thành công
 
                 List<Notes> listNote = database.notesDao().getAllNotes();
                 for (Notes ItemNote : listNote) {
-                    Log.d("Notification Check", "Ngày: " + ItemNote.getNoteDate() + " | Giờ: " + ItemNote.getNoteTime() + " | Danh mục:  " + ItemNote.getCate_name());
+                    Log.d("Notification Check", "Ngày: " + ItemNote.getNoteDate() + " | Giờ: " + ItemNote.getNoteTime() + " | Danh mục:  " + ItemNote.getCate_name() + "| Ghim: " + ItemNote.getPinned() );
                 }
             });
 
