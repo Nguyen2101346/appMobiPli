@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -32,4 +33,9 @@ public interface NotesDao {
     // Phương thức lấy số lượng hàng
     @Query("SELECT COUNT(*) FROM Notes")
     int getNotesCount();
+
+    @Query("SELECT * FROM Notes " +
+            "WHERE DATE(Note_Date / 1000, 'unixepoch') = DATE(:currentDate / 1000, 'unixepoch') " +
+            "ORDER BY Pinned DESC, Note_Date ASC")
+    List<Notes> getNoteOnDate(Date currentDate);
 }
