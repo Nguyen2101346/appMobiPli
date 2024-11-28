@@ -2,6 +2,7 @@ package com.example.utilitycalendar.home;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -69,19 +70,35 @@ public class DayHomeFragment extends Fragment implements DayHomeAdapter.OnDayHom
 
     @Override
     public void onDeleteClick(int id) {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            // Xử lý khi người dùng nhấn vào nút xóa
-            Notification notificationToDelete = database.notificationDao().getNotificationById(id);
-            if (notificationToDelete != null) {
-                cancelNotification(notificationToDelete);
-                database.notificationDao().deleteNotification(notificationToDelete);
-                queryDataByDatePattern(checkChooseDay);
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Xác nhận")
+                .setMessage("Bạn có muốn xóa thông báo không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Xử lý khi người dùng chọn "Yes"
+
+                    Executor executor = Executors.newSingleThreadExecutor();
+                    executor.execute(() -> {
+                        // Xử lý khi người dùng nhấn vào nút xóa
+                        Notification notificationToDelete = database.notificationDao().getNotificationById(id);
+                        if (notificationToDelete != null) {
+                            cancelNotification(notificationToDelete);
+                            database.notificationDao().deleteNotification(notificationToDelete);
+                            queryDataByDatePattern(checkChooseDay);
 
 
-            }
+                        }
 
-        });
+                    });
+                    dialog.dismiss();
+
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    // Xử lý khi người dùng chọn "No"
+                    dialog.dismiss(); // Đóng hộp thoại
+                })
+                .show();
+
     }
 
 

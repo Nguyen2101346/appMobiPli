@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.utilitycalendar.CreateNote.CreateNoteBottomSheet;
 import com.example.utilitycalendar.CreateNote.ShowEditNote;
@@ -15,6 +16,7 @@ import com.example.utilitycalendar.CreateNoti.CreateNotiBottomSheet;
 import com.example.utilitycalendar.Database.Notes;
 import com.example.utilitycalendar.Helper.DatePickerHelper;
 import com.example.utilitycalendar.Helper.TimePickerHelper;
+import com.example.utilitycalendar.note.NoteFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class BottomSheetManager {
@@ -35,29 +37,29 @@ public class BottomSheetManager {
         View bottomSheetView = activity.getLayoutInflater().inflate(R.layout.bottomsheetlayout, null);
         bottomSheetDialog.setContentView(bottomSheetView);
 
-        bottomSheetView.findViewById(R.id.layoutNoti).setOnClickListener(v -> openCreateNotiBottomSheet());
-        bottomSheetView.findViewById(R.id.layoutNote).setOnClickListener(v -> openCreateNoteBottomSheet());
+        bottomSheetView.findViewById(R.id.layoutNoti).setOnClickListener(v -> openCreateNotiBottomSheet(activity.getSupportFragmentManager().beginTransaction()));
+        bottomSheetView.findViewById(R.id.layoutNote).setOnClickListener(v -> openCreateNoteBottomSheet(activity.getSupportFragmentManager().beginTransaction()));
 
         bottomSheetView.findViewById(R.id.cancelButton).setOnClickListener(v -> bottomSheetDialog.dismiss());
         bottomSheetDialog.show();
     }
 
-    public void showEditNote(Notes notes) {
+    public void showEditNote(Notes notes, NoteFragment noteFragment) {
 
-        ShowEditNote showEditNote = new ShowEditNote(activity, notes, this );
+        ShowEditNote showEditNote = new ShowEditNote(activity, notes, this , noteFragment);
         showEditNote.show();
     }
 
 
-    private void openCreateNotiBottomSheet() {
+    private void openCreateNotiBottomSheet(FragmentTransaction fragmentTransaction) {
         // Truyền cả DatePickerHelper và TimePickerHelper vào constructor mới
-        CreateNotiBottomSheet createNotiBottomSheet = new CreateNotiBottomSheet(activity, datePickerHelper, timePickerHelper, this);
+        CreateNotiBottomSheet createNotiBottomSheet = new CreateNotiBottomSheet(activity, datePickerHelper, timePickerHelper, this, fragmentTransaction);
         createNotiBottomSheet.show();
         bottomSheetDialog.dismiss();
     }
-    private void openCreateNoteBottomSheet() {
+    private void openCreateNoteBottomSheet(FragmentTransaction fragmentTransaction) {
         // Truyền cả DatePickerHelper và TimePickerHelper vào constructor mới
-        CreateNoteBottomSheet createNoteBottomSheet = new CreateNoteBottomSheet(activity, datePickerHelper, timePickerHelper, this);
+        CreateNoteBottomSheet createNoteBottomSheet = new CreateNoteBottomSheet(activity, datePickerHelper, timePickerHelper, this, fragmentTransaction);
         createNoteBottomSheet.show();
         bottomSheetDialog.dismiss();
     }

@@ -15,6 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.strictmode.FragmentTagUsageViolation;
 
 import com.example.utilitycalendar.BottomSheetManager;
 import com.example.utilitycalendar.Database.Database;
@@ -25,6 +28,7 @@ import com.example.utilitycalendar.Helper.TimePickerHelper;
 import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
 import com.example.utilitycalendar.alarm.AlarmReceiver;
+import com.example.utilitycalendar.home.DayHomeFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.ParseException;
@@ -44,6 +48,7 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
     private BottomSheetManager bottomSheetManager;
     private String selectedColorHex = "#EB8585";
     private int reminder = 1;
+    private FragmentTransaction fragmentTransaction;
 
     public interface OnSaveListener {
         void onSave(Noti newNotiData);
@@ -51,11 +56,12 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
 
     private OnSaveListener onSaveListener;
 
-    public CreateNotiBottomSheet(Context context, DatePickerHelper datePickerHelper, TimePickerHelper timePickerHelper, BottomSheetManager bottomSheetManager) {
+    public CreateNotiBottomSheet(Context context, DatePickerHelper datePickerHelper, TimePickerHelper timePickerHelper, BottomSheetManager bottomSheetManager, FragmentTransaction fragmentTransaction) {
         super(context);
         this.datePickerHelper = datePickerHelper;
         this.timePickerHelper = timePickerHelper;
         this.bottomSheetManager = bottomSheetManager;
+        this.fragmentTransaction = fragmentTransaction;
         setupLayout();
     }
 
@@ -181,6 +187,14 @@ public class CreateNotiBottomSheet extends BottomSheetDialog {
 
                 showNotificationList(notification);
             });
+
+
+            DayHomeFragment newFragment = new DayHomeFragment();  // Thay bằng fragment bạn muốn chuyển tới
+            fragmentTransaction.replace(R.id.frame_layout, newFragment);  // R.id.fragment_container là ID của container fragment trong activity
+            fragmentTransaction.addToBackStack(null); // Thêm vào back stack nếu bạn muốn quay lại fragment trước
+            fragmentTransaction.commit();
+
+
 
             // Hiển thị thông báo thành công
             Toast.makeText(getContext(), "Đã lưu thông báo: " + name, Toast.LENGTH_SHORT).show();

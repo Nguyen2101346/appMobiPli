@@ -2,6 +2,7 @@ package com.example.utilitycalendar.CreateNote;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.RadioGroup;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.utilitycalendar.BottomSheetManager;
 import com.example.utilitycalendar.CreateNoti.CreateNotiBottomSheet;
@@ -27,6 +29,7 @@ import com.example.utilitycalendar.Helper.DatePickerHelper;
 import com.example.utilitycalendar.Helper.TimePickerHelper;
 import com.example.utilitycalendar.MainActivity;
 import com.example.utilitycalendar.R;
+import com.example.utilitycalendar.note.NoteFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.ParseException;
@@ -51,6 +54,7 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
     private String selectedCategory = "hoctap";
     private String selectedColorHex = "#EB8585";
     private int pinned = 0;
+    private FragmentTransaction fragmentTransaction;
 
     public interface OnSaveListener {
         void onSave(Note newNoteData);
@@ -58,12 +62,12 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
 
     private OnSaveListener onSaveListener;
 
-    public CreateNoteBottomSheet(Context context, DatePickerHelper datePickerHelper, TimePickerHelper timePickerHelper, BottomSheetManager bottomSheetManager) {
+    public CreateNoteBottomSheet(Context context, DatePickerHelper datePickerHelper, TimePickerHelper timePickerHelper, BottomSheetManager bottomSheetManager, FragmentTransaction fragmentTransaction) {
         super(context);
         this.datePickerHelper = datePickerHelper;
         this.timePickerHelper = timePickerHelper;
         this.bottomSheetManager = bottomSheetManager;
-
+        this.fragmentTransaction = fragmentTransaction;
         setupLayout();
     }
 
@@ -285,6 +289,19 @@ public class CreateNoteBottomSheet extends BottomSheetDialog {
                     Log.d("Notification Check", "Ngày: " + ItemNote.getNoteDate() + " | Giờ: " + ItemNote.getNoteTime() + " | Danh mục:  " + ItemNote.getCate_name() + "| Ghim: " + ItemNote.getPinned() );
                 }
             });
+
+
+            NoteFragment newFragment = new NoteFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("categoryId", selectedCategory); // Truyền id của category
+            newFragment.setArguments(bundle);
+
+            // Thay bằng fragment bạn muốn chuyển tới
+            fragmentTransaction.replace(R.id.frame_layout, newFragment);  // R.id.fragment_container là ID của container fragment trong activity
+            fragmentTransaction.addToBackStack(null); // Thêm vào back stack nếu bạn muốn quay lại fragment trước
+            fragmentTransaction.commit();
+
 
             // Hiển thị thông báo thành công
             Toast.makeText(getContext(), "Đã lưu ghi chú: " + name, Toast.LENGTH_SHORT).show();

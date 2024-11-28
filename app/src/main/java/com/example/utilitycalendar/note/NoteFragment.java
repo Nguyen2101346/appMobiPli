@@ -1,5 +1,6 @@
 package com.example.utilitycalendar.note;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,7 +50,7 @@ public class NoteFragment extends Fragment  implements NoteAdapter.OnNoteClickLi
         bottomSheetManager = new BottomSheetManager((AppCompatActivity) requireActivity());
 
 
-        bottomSheetManager.showEditNote(notes);
+        bottomSheetManager.showEditNote(notes, this);
 
 
     }
@@ -57,20 +58,35 @@ public class NoteFragment extends Fragment  implements NoteAdapter.OnNoteClickLi
 
     @Override
     public void onDeleteClick(int id) {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            // Xử lý khi người dùng nhấn vào nút xóa
-            Notes notes = database.notesDao().getNotesById(id);
-            if (notes != null) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Xác nhận")
+                .setMessage("Bạn có muốn xóa ghi chú không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Xử lý khi người dùng chọn "Yes"
+                    Executor executor = Executors.newSingleThreadExecutor();
+                    executor.execute(() -> {
+                        // Xử lý khi người dùng nhấn vào nút xóa
+                        Notes notes = database.notesDao().getNotesById(id);
+                        if (notes != null) {
 
-                database.notesDao().deleteNotes(notes);
-                database.noteCategoriesDao().updateRemoveNoteCategories(notes.getCate_name());
-                queryData();
+                            database.notesDao().deleteNotes(notes);
+                            database.noteCategoriesDao().updateRemoveNoteCategories(notes.getCate_name());
+                            queryData();
 
 
-            }
+                        }
 
-        });
+                    });
+
+                    dialog.dismiss();
+
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    // Xử lý khi người dùng chọn "No"
+                    dialog.dismiss(); // Đóng hộp thoại
+                })
+                .show();
+
     }
 
 
